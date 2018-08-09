@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+var express = require('express');
+var app = express();
 client.login(process.env.TOKEN);
 var http = require('http'); // 3. HTTP server
-var app = require('./app'); // this is your express app
 var port = process.env.PORT; // 2. Using process.env.PORT
 app.set('port', port);
 var server = http.createServer(app);
