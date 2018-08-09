@@ -5,6 +5,7 @@
   "main": "bot.js",
   "dependencies": {
     "discord.js": "^11.3.2",
+    "express": "^4.16.3",
     "http": "^0.0.0"
   },
   "devDependencies": {},
