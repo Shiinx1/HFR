@@ -63,7 +63,7 @@ function FixEvery5M(){
 }
 
 function fixChannel(input){
-	input.fetchMessages({ limit: 50 }).then(msgs => {
+	input.fetchMessages({ limit: 100 }).then(msgs => {
 				msgs.forEach(function(msg){
 					if(msg.attachments.size > 0){
 						react(msg);
@@ -73,7 +73,7 @@ function fixChannel(input){
 }
 
 function cleanChannel(input){
-	input.fetchMessages({ limit: 50 }).then(msgs => {
+	input.fetchMessages({ limit: 100 }).then(msgs => {
 				msgs.forEach(function(msg){
 					if(msg.attachments.size > 0){
 					} else {
