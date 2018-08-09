@@ -31,9 +31,6 @@ function FixEvery5M(){
 	Chan8 = client.channels.find("id", "469603267828252672");
 	Chan9 = client.channels.find("id", "469603859568918538");
 	Chan10 = client.channels.find("id", "469603894301818881");
-	Chan11 = client.channels.find("id", "469604582184452116");
-	Chan12 = client.channels.find("id", "469604622269677578");
-	Chan13 = client.channels.find("id", "469604672915636235");
 	fixChannel(Chan1);
 	fixChannel(Chan2);
 	fixChannel(Chan3);
@@ -44,9 +41,6 @@ function FixEvery5M(){
 	fixChannel(Chan8);
 	fixChannel(Chan9);
 	fixChannel(Chan10);
-	fixChannel(Chan11);
-	fixChannel(Chan12);
-	fixChannel(Chan13);
 	cleanChannel(Chan1);
 	cleanChannel(Chan2);
 	cleanChannel(Chan3);
@@ -57,9 +51,6 @@ function FixEvery5M(){
 	cleanChannel(Chan8);
 	cleanChannel(Chan9);
 	cleanChannel(Chan10);
-	cleanChannel(Chan11);
-	cleanChannel(Chan12);
-	cleanChannel(Chan13);
 }
 
 function fixChannel(input){
@@ -93,7 +84,7 @@ function GameBar(){
 }
 
 client.on('message', (msg) => {
-	var allowedChannelsArray = ["469603172676272148","469603233514651648","469603216565207040","469603840841482252","469603824705732619","469603799624056843","469603840841482252","469603824705732619","469603799624056843","469603247233957893","469603267828252672","469603859568918538","469603894301818881","469604582184452116","469604622269677578","469604672915636235"];
+	var allowedChannelsArray = ["469603172676272148","469603233514651648","469603216565207040","469603840841482252","469603824705732619","469603799624056843","469603247233957893","469603267828252672","469603859568918538","469603894301818881"];
 	allowedChannelsArray.find(element => {
         if (msg.channel.id === element) {
 	if (msg.attachments.size > 0) {
