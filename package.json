@@ -1,0 +1,16 @@
+{
+  "name": "hfrbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "http": "^0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "start"
+  },
+  "author": "",
+  "license": "ISC"
+}
