@@ -1,10 +1,11 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const config = require("./config.json");
 var express = require('express');
 var app = express();
-client.login(process.env.TOKEN);
+client.login(config.token);
 var http = require('http'); // 3. HTTP server
-var port = process.env.PORT; // 2. Using process.env.PORT
+var port = 3000; // 2. Using process.env.PORT
 app.set('port', port);
 var server = http.createServer(app);
 server.listen(port);
