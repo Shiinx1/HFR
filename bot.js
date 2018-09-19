@@ -1,22 +1,10 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const config = require("./config.json");
-var express = require('express');
-var app = express();
-client.login(config.token);
-var http = require('http'); // 3. HTTP server
-var port = 3000; // 2. Using process.env.PORT
-app.set('port', port);
-var server = http.createServer(app);
-server.listen(port);
+client.login("token");
 
 client.on('ready', () => {
 FixEvery5M();
 GameBar();
-setInterval(function() {
-    http.get("http://hfreee.herokuapp.com");
-	}, 300000); // every 5 minutes (300000
-	// PING SERVER
 setInterval(GameBar, 30000);
 setInterval(FixEvery5M, 900000);
 })
