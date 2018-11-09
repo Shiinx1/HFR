@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const config = require('config.json');
+const config = require('./config.json');
 client.login(config.token);
 
-const Channels = ["469603172676272148","469603233514651648","469603216565207040","469603840841482252","469603824705732619","469603799624056843","469603247233957893","469603267828252672","469603859568918538","469603894301818881"];
+const Channels = ['469603172676272148','469603233514651648','469603216565207040','469603840841482252','469603824705732619','469603799624056843','469603247233957893','469603267828252672','469603859568918538','469603894301818881'];
 
 client.on('ready', () => {
 FixEvery5M();
@@ -14,39 +14,41 @@ setInterval(FixEvery5M, 900000);
 
 function adminVI(){
 	for(i in Channels){
-		verifyImages(Channels[i]);
+		let Channel = client.guilds.get('469595261468147732').channels.find(channels => channels.id == Channels[i]);
+		verifyImages(Channel);
 		}
 }
 
 function FixEvery5M(){
 	for(i in Channels){
-		fixChannel(Channels[i]);
-		cleanChannel(Channels[i]);
+		let Channel = client.guilds.get('469595261468147732').channels.find(channels => channels.id == Channels[i]);
+		fixChannel(Channel);
+		cleanChannel(Channel);
 		}
 }
 
-function verifyImages(input){
-	input.fetchMessages({ limit: 100 }).then(msgs => {
+function verifyImages(Channel){
+	Channel.fetchMessages({ limit: 100 }).then(msgs => {
 				msgs.forEach(function(msg){
 					if(msg.attachments.size > 0){
-				var argsM = msg.createdAt.toString().split(" ");
-				var dateObj = new Date();
-				var n = dateObj.getUTCDate();
+				let argsM = msg.createdAt.toString().split(" ");
+				let dateObj = new Date();
+				let n = dateObj.getUTCDate();
 				if(+argsM[2]+7 > 29){
-					var jours = n + ( 29 - +argsM[2]);
+					let jours = n + ( 29 - +argsM[2]);
 					} else {
-					var jours = n - +argsM[2];
+					let jours = n - +argsM[2];
 				}
 				 if(jours > 2){
-					var NbZero = +msg.reactions.find(reaction => reaction.emoji.id == "469736145224204298").count - 1;
-					var NbVingt = +msg.reactions.find(reaction => reaction.emoji.id == "469736164639637504").count - 1;
-					var NbQuarante = +msg.reactions.find(reaction => reaction.emoji.id == "469736177981718535").count - 1;
-					var NbSoixante = +msg.reactions.find(reaction => reaction.emoji.id == "469736192007471111").count - 1;
-					var NbQuatrevingt = +msg.reactions.find(reaction => reaction.emoji.id == "469736204514885644").count - 1;
-					var NbCent = +msg.reactions.find(reaction => reaction.emoji.id == "469736216494080001").count - 1;
-					var Total = NbZero+NbVingt+NbQuarante+NbSoixante+NbQuatrevingt+NbCent;
-					var TotalValeur = (NbZero)+(NbVingt*20)+(NbQuarante*40)+(NbSoixante*60)+(NbQuatrevingt*80)+(NbCent*100);
-					var Moyenne = TotalValeur/Total;
+					let NbZero = +msg.reactions.find(reaction => reaction.emoji.id == "469736145224204298").count - 1;
+					let NbVingt = +msg.reactions.find(reaction => reaction.emoji.id == "469736164639637504").count - 1;
+					let NbQuarante = +msg.reactions.find(reaction => reaction.emoji.id == "469736177981718535").count - 1;
+					let NbSoixante = +msg.reactions.find(reaction => reaction.emoji.id == "469736192007471111").count - 1;
+					let NbQuatrevingt = +msg.reactions.find(reaction => reaction.emoji.id == "469736204514885644").count - 1;
+					let NbCent = +msg.reactions.find(reaction => reaction.emoji.id == "469736216494080001").count - 1;
+					let Total = NbZero+NbVingt+NbQuarante+NbSoixante+NbQuatrevingt+NbCent;
+					let TotalValeur = (NbZero)+(NbVingt*20)+(NbQuarante*40)+(NbSoixante*60)+(NbQuatrevingt*80)+(NbCent*100);
+					let Moyenne = TotalValeur/Total;
 					console.log("Moyenne: "+Moyenne);
 					if(Moyenne < 60){
 						msg.delete();
@@ -59,8 +61,8 @@ function verifyImages(input){
 			})
 }
 
-function fixChannel(input){
-	input.fetchMessages({ limit: 100 }).then(msgs => {
+function fixChannel(Channel){
+	Channel.fetchMessages({ limit: 100 }).then(msgs => {
 				msgs.forEach(function(msg){
 					if(msg.attachments.size > 0){
 						react(msg);
@@ -69,8 +71,8 @@ function fixChannel(input){
 	})
 }
 
-function cleanChannel(input){
-	input.fetchMessages({ limit: 100 }).then(msgs => {
+function cleanChannel(Channel){
+	Channel.fetchMessages({ limit: 100 }).then(msgs => {
 				msgs.forEach(function(msg){
 					if(msg.attachments.size > 0){
 					} else {
@@ -90,18 +92,19 @@ function GameBar(){
 }
 
 client.on('message', (msg) => {
-	Channels.find(element => {
-        if (msg.channel.id === element) {
+	if(Channels.includes(msg.channel.id)){
 	if (msg.attachments.size > 0) {
             react(msg);
 				}
 		if(msg.content == "!fix"){
 			if(msg.member.hasPermission('ADMINISTRATOR')){
 				msg.delete();
-				msg.channel.fetchMessages({ limit: 50 }).then(msgs => {
+				msg.channel.fetchMessages({ limit: 100 }).then(msgs => {
 				msgs.forEach(function(msg){
 					if(msg.attachments.size > 0){
 						react(msg);
+					} else {
+						msg.delete();
 					}
 				})
 				})
@@ -118,14 +121,23 @@ client.on('message', (msg) => {
 			msg.channel.send("You don't have the permission to execute that command!");
 			}
 		}
-	})
 })
 
 function react(input) {
-    input.react("469736145224204298").then( () => 
-    input.react("469736164639637504")).then( () =>
-    input.react("469736177981718535")).then( () =>
-    input.react("469736192007471111")).then( () =>
-    input.react("469736204514885644")).then( () =>
-    input.react("469736216494080001"));
+	input.react("469736145224204298")
+	.catch()
+	.then( () => 
+	input.react("469736164639637504"))
+	.catch()
+	.then( () =>
+	input.react("469736177981718535"))
+	.catch()
+	.then( () =>
+	input.react("469736192007471111"))
+	.catch()
+	.then( () =>
+	input.react("469736204514885644"))
+	.catch()
+	.then( () =>
+	input.react("469736216494080001"));
 }
