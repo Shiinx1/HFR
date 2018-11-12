@@ -81,8 +81,7 @@ function fixChannel(Channel){
 function cleanChannel(Channel){
 	Channel.fetchMessages({ limit: 100 }).then(msgs => {
 				msgs.forEach(function(msg){
-					if(msg.attachments.size > 0){
-					} else {
+					if(!msg.attachments.size > 0){
 						msg.delete();
 					}
 				})
